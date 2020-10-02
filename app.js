@@ -1,7 +1,7 @@
 // IMPORT MODULES
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
-const request = require("request");
 const https = require("https");
 
 // INITIALIZE EXPRESS AND SET A PORT
@@ -39,11 +39,11 @@ app.post("/", function (req, res) {
 
     const jsonData = JSON.stringify(data);
 
-    const url = "https://us2.api.mailchimp.com/3.0/lists/78186d2534";
+    const url = "https://us2.api.mailchimp.com/3.0/lists/" + process.env.MAILCHIMP_LIST_ID;
 
     const options = {
         method: "POST",
-        auth: "randomstring:e76499c62bb09b219f34efaf9299143e-us2"
+        auth: "randomstring:" + process.env.MAILCHIMP_API_KEY
     };
 
     const request = https.request(url, options, function (response) {
@@ -71,10 +71,3 @@ app.post("/", function (req, res) {
 app.listen(process.env.PORT || port, function () {
     console.log("Server running on port " + port);
 });
-
-
-// API Key
-// e76499c62bb09b219f34efaf9299143e-us2
-
-// List ID
-// 78186d2534
